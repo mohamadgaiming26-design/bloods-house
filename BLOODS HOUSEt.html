@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>𝓢𝓪𝓵𝓪𝓱 ! .exe Converter</title>
+
+<style>
+body {
+    background: radial-gradient(circle at top, #1a1a2e, #0b0b14);
+    color: #fff;
+    font-family: Consolas, monospace;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 25px;
+    min-height: 100vh;
+}
+
+h2 {
+    color: #ff2f2f;
+    text-shadow: 0 0 25px #ff2f2f;
+    margin-bottom: 15px;
+}
+
+
+.tabs {
+    display: flex;
+    margin-bottom: 15px;
+}
+
+.tab {
+    padding: 10px 22px;
+    margin: 0 5px;
+    cursor: pointer;
+    border-radius: 8px;
+    background: #141421;
+    border: 2px solid #ff2f2f;
+    box-shadow: 0 0 10px #ff2f2f;
+    transition: 0.25s;
+}
+
+.tab.active {
+    background: linear-gradient(145deg, #ff2f2f, #b30000);
+    box-shadow: 0 0 30px #ff4f4f;
+}
+
+
+.container {
+    display: none;
+    width: 800px;
+}
+
+.container.active {
+    display: block;
+}
+
+
+textarea {
+    width: 100%;
+    height: 220px;
+    background: #141421;
+    color: #eaeaea;
+    border: 2px solid #ff2f2f;
+    padding: 15px;
+    font-size: 14px;
+    border-radius: 10px;
+    outline: none;
+    margin-bottom: 12px;
+}
+
+textarea:focus {
+    box-shadow: 0 0 25px #ff2f2f;
+}
+
+
+button {
+    background: linear-gradient(145deg, #ff2f2f, #b30000);
+    color: #fff;
+    border: none;
+    padding: 10px 24px;
+    margin: 6px 4px;
+    font-weight: bold;
+    cursor: pointer;
+    border-radius: 8px;
+    box-shadow: 0 0 15px #ff2f2f;
+    transition: 0.2s;
+}
+
+button:hover {
+    transform: scale(1.05);
+}
+
+
+.output {
+    background: #141421;
+    border: 2px solid #ff2f2f;
+    padding: 15px;
+    border-radius: 10px;
+    white-space: pre-wrap;
+    box-shadow: inset 0 0 12px rgba(255,47,47,0.3);
+    margin-bottom: 12px;
+}
+
+.footer {
+    margin-top: 25px;
+    font-size: 14px;
+    letter-spacing: 4px;
+    color: #ff3b3b;
+    font-weight: bold;
+    text-shadow:
+        0 0 10px #ff2f2f,
+        0 0 30px #ff0000,
+        0 0 60px rgba(255,0,0,0.8);
+    animation: glow 2s infinite alternate;
+}
+
+
+@keyframes glow {
+    from { text-shadow: 0 0 10px #ff2f2f; }
+    to { text-shadow: 0 0 40px #ff0000; }
+}
+
+
+.server-box {
+    margin-top: 20px;
+    padding: 15px 20px;
+    background: linear-gradient(145deg, #1a1a2e, #0b0b14);
+    border: 2px solid #ff2f2f;
+    border-radius: 12px;
+    box-shadow: 0 0 20px #ff2f2f;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.server-box img {
+    width: 48px;
+    height: 48px;
+    border-radius: 8px;
+    box-shadow: 0 0 15px #ff2f2f;
+}
+
+.server-box a {
+    color: #ff4f4f;
+    font-weight: bold;
+    text-decoration: none;
+    transition: 0.2s;
+}
+
+.server-box a:hover {
+    color: #fff;
+    text-shadow: 0 0 20px #ff4f4f;
+}
+</style>
+</head>
+
+<body>
+
+<h2>BLOODS HOUSE</h2>
+
+<div class="tabs">
+    <div class="tab active" onclick="openTab(0)">AOB Converter</div>
+    <div class="tab" onclick="openTab(1)">Image → C++</div>
+</div>
+
+
+<div class="container active">
+<textarea id="aobInput" placeholder="Paste C#, C++ or Python AOB here..."></textarea>
+
+<button onclick="toCPP()">→ C++</button>
+<button onclick="toCSharp()">→ C#</button>
+<button onclick="toPython()">→ Python</button>
+
+<div class="output" id="aobOutput">Converted code will appear here...</div>
+</div>
+
+
+<div class="container">
+<input type="file" accept="image/*" onchange="convertImage(this)">
+<br><br>
+<button onclick="copyImageCode()">COPY CODE</button>
+
+<div class="output" id="imageOutput">// Image C++ code will appear here</div>
+</div>
+
+
+<div class="footer">BY 𝓢𝓪𝓵𝓪𝓱 ! .exe
+</div>
+
+
+<div class="server-box">
+    <img src="https://files.catbox.moe/dmlepu.png" alt="Server Icon">
+    <div>
+        <div><strong>BLOODS HOUSE SERVER
+</strong></div>
+        <div style="font-size:13px;color:#ff7b7b;">Join us for latest updates & tools</div>
+        <a href="https://discord.gg/Rwrt8J8uGp
+" target="_blank">https://discord.gg/Rwrt8J8uGp
+</a>
+    </div>
+</div>
+
+<script>
+function openTab(index) {
+    document.querySelectorAll('.tab').forEach((t,i)=>{
+        t.classList.toggle('active', i===index);
+    });
+    document.querySelectorAll('.container').forEach((c,i)=>{
+        c.classList.toggle('active', i===index);
+    });
+}
+
+
+function clean(code) {
+    return code.match(/([0-9A-Fa-f]{2}|\?\?)/g) || [];
+}
+
+function build(bytes, start, end, isCSharp=false) {
+    return start + bytes.map(b=>{
+        if(b==="??") return isCSharp ? "0" : "0x00";
+        if(isCSharp) return parseInt(b,16);
+        return "0x"+b.toUpperCase();
+    }).join(", ") + end;
+}
+
+function toCPP() {
+    let b = clean(aobInput.value);
+    aobOutput.textContent = build(b,"unsigned char aob[] = {\n  ","\n};");
+}
+
+function toCSharp() {
+    let b = clean(aobInput.value);
+    aobOutput.textContent = build(b,"byte[] aob = new byte[] {\n  ","\n};", true);
+}
+
+function toPython() {
+    let b = clean(aobInput.value);
+    aobOutput.textContent =
+        "aob = bytes([\n  " +
+        b.map(x=>x==="??"?"0x00":"0x"+x.toUpperCase()).join(", ") +
+        "\n])";
+}
+
+
+let imageCode = "";
+
+function convertImage(input) {
+    let file = input.files[0];
+    let reader = new FileReader();
+
+    reader.onload = function() {
+        let bytes = new Uint8Array(reader.result);
+        imageCode = "unsigned char image_data[] = {\n  " +
+            Array.from(bytes).map(b=>"0x"+b.toString(16).padStart(2,'0')).join(", ") +
+            "\n};\n\nsize_t image_size = " + bytes.length + ";";
+        imageOutput.textContent = imageCode;
+    };
+
+    reader.readAsArrayBuffer(file);
+}
+
+function copyImageCode() {
+    navigator.clipboard.writeText(imageCode);
+    alert("Image code copied!");
+}
+</script>
+
+</body>
+</html>
